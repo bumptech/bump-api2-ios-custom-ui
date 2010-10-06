@@ -51,11 +51,21 @@
  * bumping to work.
  */
 -(void)bumpSessionStartCalled{
+	//Setup our popup UI
+	UIViewAutoresizing flexible = (UIViewAutoresizingFlexibleWidth |
+								   UIViewAutoresizingFlexibleHeight);
+
+	UIViewAutoresizing pinnedToTop = (UIViewAutoresizingFlexibleLeftMargin |
+									  UIViewAutoresizingFlexibleRightMargin |
+									  UIViewAutoresizingFlexibleBottomMargin);
+
 	self.uiContainer = [[[UIView alloc] initWithFrame:[_parentView bounds]] autorelease];
 	UIView *colorOverlay = [[UIView alloc] initWithFrame:[_parentView bounds]];
 	[colorOverlay setBackgroundColor:[UIColor whiteColor]];
 	[colorOverlay setAlpha:0.4];
 	[_uiContainer addSubview:colorOverlay];
+	[_uiContainer setAutoresizingMask:flexible];
+	[colorOverlay setAutoresizingMask:flexible];
 	[colorOverlay release];
 	
 	CGRect popupRect = CGRectMake(_uiContainer.bounds.size.width / 2.0 - UI_W / 2.0, 
@@ -66,6 +76,7 @@
 	popupRect = CGRectIntegral(popupRect);
 	
 	self.thePopup = [[[BumpAPIPopup alloc] initWithFrame:popupRect] autorelease];
+	[_thePopup setAutoresizingMask:pinnedToTop];
 	[_thePopup setDelegate:self];
 	[_uiContainer addSubview:_thePopup];
 	[_parentView addSubview:_uiContainer];
