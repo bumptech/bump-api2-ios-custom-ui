@@ -127,6 +127,7 @@
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Connecting...", @"BumpApiLocalizable", @"Dialog shown when user has just bumped and information is sending to the other phone.")];
 	[newPage startSpinner];
 	[_thePopup changePage:newPage];
+	[newPage release];
 }
 
 /**
@@ -137,6 +138,7 @@
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
 	[newPage stopSpinner];
 	[_thePopup changePage:newPage];
+	[newPage release];
 }
 
 /**
@@ -149,6 +151,7 @@
 	 [newPage.yesButton addTarget:self action:@selector(yesPressed) forControlEvents:UIControlEventTouchUpInside];
 	 [newPage.noButton addTarget:self action:@selector(noPressed) forControlEvents:UIControlEventTouchUpInside];
 	[_thePopup changePage:newPage];
+	[newPage release];
 }
 /**
  * After both parties have pressed yes, And bumpSessionStartedWith:(Bumper) is about to be called
@@ -158,6 +161,7 @@
 	BumpAPIPromptPage *newPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
 	[_thePopup changePage:newPage];
+	[newPage release];
 	[_uiContainer removeFromSuperview];
 }
 
