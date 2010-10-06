@@ -25,11 +25,11 @@
 #define BumpAPIUISmallFont [UIFont systemFontOfSize:16.0]
 
 @interface BumpAPIUI : NSObject <BumpMatchUI, BumpAPIPopupDelegate> {
-    UIWindow *_parentWindow;
+    UIView *_parentView;
 	UIView *_uiContainer;
 	BumpAPIPopup *_thePopup;
 	BumpAPI *_bumpAPIObject;
 }
-@property (nonatomic, assign) UIWindow *parentWindow;
+@property (nonatomic, assign) UIView *parentView;
 @property (nonatomic, assign) id bumpAPIObject;
 @end

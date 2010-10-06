@@ -32,7 +32,7 @@
 @end
 
 @implementation BumpAPIUI
-@synthesize parentWindow = _parentWindow;
+@synthesize parentView = _parentView;
 @synthesize uiContainer = _uiContainer;
 @synthesize thePopup = _thePopup;
 @synthesize bumpAPIObject = _bumpAPIObject;
@@ -51,8 +51,8 @@
  * bumping to work.
  */
 -(void)bumpSessionStartCalled{
-	self.uiContainer = [[[UIView alloc] initWithFrame:[_parentWindow bounds]] autorelease];
-	UIView *colorOverlay = [[UIView alloc] initWithFrame:[_parentWindow bounds]];
+	self.uiContainer = [[[UIView alloc] initWithFrame:[_parentView bounds]] autorelease];
+	UIView *colorOverlay = [[UIView alloc] initWithFrame:[_parentView bounds]];
 	[colorOverlay setBackgroundColor:[UIColor whiteColor]];
 	[colorOverlay setAlpha:0.4];
 	[_uiContainer addSubview:colorOverlay];
@@ -68,7 +68,7 @@
 	self.thePopup = [[[BumpAPIPopup alloc] initWithFrame:popupRect] autorelease];
 	[_thePopup setDelegate:self];
 	[_uiContainer addSubview:_thePopup];
-	[_parentWindow addSubview:_uiContainer];
+	[_parentView addSubview:_uiContainer];
 	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
 	[promptPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
 	[_thePopup changePage:promptPage];
