@@ -123,20 +123,20 @@
  * Physical bump occurced. Update ui to tell user that a bump has occured
  */
 -(void)bumpOccurred{
-	BumpAPIWaitPage *bumpOccuredPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	[bumpOccuredPage setPromptText:NSLocalizedStringFromTable(@"Connecting...", @"BumpApiLocalizable", @"Dialog shown when user has just bumped and information is sending to the other phone.")];
-	[bumpOccuredPage startSpinner];
-	[_thePopup changePage:bumpOccuredPage];
+	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:NSLocalizedStringFromTable(@"Connecting...", @"BumpApiLocalizable", @"Dialog shown when user has just bumped and information is sending to the other phone.")];
+	[newPage startSpinner];
+	[_thePopup changePage:newPage];
 }
 
 /**
  * Let's you know that a match could not be made via a bump. It's best to prompt users to try again.
  */
 -(void)bumpMatchFailedReason:(BumpMatchFailedReason)reason{
-	BumpAPIWaitPage *bumpOccuredPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	[bumpOccuredPage setPromptText:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
-	[bumpOccuredPage stopSpinner];
-	[_thePopup changePage:bumpOccuredPage];
+	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
+	[newPage stopSpinner];
+	[_thePopup changePage:newPage];
 }
 
 /**
@@ -144,20 +144,20 @@
  * accept this connection. (Pressing Yes/No should call confirmMatch:(BOOL) on the BumpAPI)
  */
 -(void)bumpMatched:(Bumper*)bumper{
-	BumpAPIConfirmPage *bumpOccuredPage = [[BumpAPIConfirmPage alloc] initWithFrame:CGRectZero];
-	[bumpOccuredPage setPromptText:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Connect with %@?", @"BumpApiLocalizable", @"Request to connect with another user. For example, this might say Connect with Andy?."), bumper.userName]];
-	 [bumpOccuredPage.yesButton addTarget:self action:@selector(yesPressed) forControlEvents:UIControlEventTouchUpInside];
-	 [bumpOccuredPage.noButton addTarget:self action:@selector(noPressed) forControlEvents:UIControlEventTouchUpInside];
-	[_thePopup changePage:bumpOccuredPage];
+	BumpAPIConfirmPage *newPage = [[BumpAPIConfirmPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Connect with %@?", @"BumpApiLocalizable", @"Request to connect with another user. For example, this might say Connect with Andy?."), bumper.userName]];
+	 [newPage.yesButton addTarget:self action:@selector(yesPressed) forControlEvents:UIControlEventTouchUpInside];
+	 [newPage.noButton addTarget:self action:@selector(noPressed) forControlEvents:UIControlEventTouchUpInside];
+	[_thePopup changePage:newPage];
 }
 /**
  * After both parties have pressed yes, And bumpSessionStartedWith:(Bumper) is about to be called
  * on the API Delegate.
  */
 -(void)bumpCompletedSuccessfully{
-	BumpAPIPromptPage *bumpOccuredPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[bumpOccuredPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
-	[_thePopup changePage:bumpOccuredPage];
+	BumpAPIPromptPage *newPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
+	[_thePopup changePage:newPage];
 	[_uiContainer removeFromSuperview];
 }
 
