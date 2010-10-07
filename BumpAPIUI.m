@@ -62,7 +62,7 @@
  * Result of startSession (user wants to bump), highly recommended to call setBumpable:YES; for 
  * bumping to work.
  */
--(void)bumpSessionStartCalled{
+-(void)bumpRequestSessionCalled{
 	//Setup our popup UI
 	UIViewAutoresizing flexible = (UIViewAutoresizingFlexibleWidth |
 								   UIViewAutoresizingFlexibleHeight);
@@ -126,7 +126,7 @@
  * Result of endSession call on BumpAPI. This is to handle the case when for some reason your code 
  * calls endSession while the UI is up. Should likely close the bumping UI.
  */
--(void)bumpSessionEndCalled{
+-(void)bumpEndSessionCalled{
     //close the bumping UI
 	[self closeUI];
 }
