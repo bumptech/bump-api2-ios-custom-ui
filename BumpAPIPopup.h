@@ -29,7 +29,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BumpAPI.h"
-#import "BumpAPINoUI.h"
+#import "BumpAPICustomUI.h"
 
 #define SCALE_PHASE1			0.1
 #define SCALE_PHASE2			1.2

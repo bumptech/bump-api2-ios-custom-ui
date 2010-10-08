@@ -29,14 +29,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BumpAPI.h"
-#import "BumpAPINoUI.h"
+#import "BumpAPICustomUI.h"
 #import "BumpAPIPopup.h"
 
 #define BumpAPIUIDefaultFont [UIFont systemFontOfSize:18.0]
 #define BumpAPIUIBoldFont [UIFont boldSystemFontOfSize:18.0]
 #define BumpAPIUISmallFont [UIFont systemFontOfSize:16.0]
 
-@interface BumpAPIUI : NSObject <BumpMatchUI, BumpAPIPopupDelegate> {
+@interface BumpAPIUI : NSObject <BumpAPICustomUI, BumpAPIPopupDelegate> {
     UIView *_parentView;
 	UIView *_uiContainer;
 	BumpAPIPopup *_thePopup;
