@@ -169,7 +169,7 @@
  * After both parties have pressed yes, And bumpSessionStartedWith:(Bumper) is about to be called
  * on the API Delegate.
  */
--(void)bumpCompletedSuccessfully{
+-(void)bumpSessionStarted{
 	BumpAPIPromptPage *newPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
 	[_thePopup changePage:newPage];
