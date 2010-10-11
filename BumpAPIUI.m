@@ -106,7 +106,6 @@
 	[_uiContainer addSubview:bumpButton];
 #endif
 	//show the UI for bumping
-	[_bumpAPIObject setBumpable:YES];
 }
 
 - (void)bumpFailedToConnectToBumpNetwork {
@@ -120,6 +119,9 @@
 	[promptPage setSubText:[_bumpAPIObject actionMessage]];
 	[_thePopup changePage:promptPage];
 	[promptPage release];
+	
+	//allow bumping
+	[_bumpAPIObject setBumpable:YES];
 }
 
 /**
