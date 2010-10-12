@@ -58,10 +58,7 @@
 
 #pragma mark -
 #pragma mark Default BumpMatchUI delegate
-/**
- * Result of startSession (user wants to bump), highly recommended to call setBumpable:YES; for 
- * bumping to work.
- */
+
 -(void)bumpRequestSessionCalled{
 	//Setup our popup UI
 	UIViewAutoresizing flexible = (UIViewAutoresizingFlexibleWidth |
@@ -119,9 +116,6 @@
 	[promptPage setSubText:[_bumpAPIObject actionMessage]];
 	[_thePopup changePage:promptPage];
 	[promptPage release];
-	
-	//allow bumping
-	[_bumpAPIObject setBumpable:YES];
 }
 
 /**
