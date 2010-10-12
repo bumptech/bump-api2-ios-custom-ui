@@ -52,7 +52,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
 		_mugView = [[UIImageView alloc] initWithFrame:CGRectZero];
-		[_mugView setImage:[UIImage imageNamed:@"BumpAPIAssets.bundle/anon_pic.png"]];
+		[_mugView setImage:[UIImage imageNamed:@"BumpAPIAssets.bundle/ready.png"]];
 		
 		_promptView = [[UILabel alloc] initWithFrame:CGRectZero];
 		[_promptView setBackgroundColor:[UIColor clearColor]];
