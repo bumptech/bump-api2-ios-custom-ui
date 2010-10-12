@@ -31,11 +31,11 @@
 #import "BumpAPIUI.h"
 
 #define HANDS_SIZE 72
-#define HANDS_ABOVE_CENTER 15
-#define TEXT_ABOVE_CENTER 10
-#define TEXT_HEIGHT 20
+#define HANDS_ABOVE_CENTER 25
+#define TEXT_ABOVE_CENTER 20
+#define TEXT_HEIGHT 40
 #define SUB_TEXT_HEIGHT 60
-#define MARGIN 10
+#define MARGIN 5
 
 @implementation BumpAPIPromptPage
 - (id)initWithFrame:(CGRect)frame {
@@ -49,6 +49,7 @@
 		_subTextView = [[UILabel alloc] initWithFrame:CGRectZero];
 		
 		[_promptView setBackgroundColor:[UIColor clearColor]];
+		[_promptView setNumberOfLines:2];
 		[_subTextView setBackgroundColor:[UIColor clearColor]];
 		[_subTextView setNumberOfLines:4];
 		
