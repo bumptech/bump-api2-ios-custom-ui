@@ -187,6 +187,12 @@
 #pragma mark Confirm page buttons
 - (void)yesPressed{
 	[_bumpAPIObject confirmMatch:YES];
+	
+	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:NSLocalizedStringFromTable(@"Please wait", @"BumpApiLocalizable", @"This message asks the user to please wait while the Bump service is doing something.")];
+	[newPage startSpinner];
+	[_thePopup changePage:newPage];
+	[newPage release];
 }
 - (void) noPressed{
 	[_bumpAPIObject confirmMatch:NO];
