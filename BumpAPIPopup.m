@@ -83,6 +83,7 @@
 		
 		//Close Button
 		_closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+		[_closeButton setShowsTouchWhenHighlighted:YES];
 		[_closeButton setImage:[UIImage imageNamed:@"BumpAPIAssets.bundle/close_popup.png"]
 					  forState:UIControlStateNormal];
 		[_closeButton addTarget:self
