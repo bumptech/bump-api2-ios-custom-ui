@@ -61,6 +61,8 @@
 
 -(void)bumpRequestSessionCalled{
 	//Setup our popup UI
+	//Just incase we're showing a new popup before the closeUI selector was called with delay
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(closeUI) object:nil];
 	UIViewAutoresizing flexible = (UIViewAutoresizingFlexibleWidth |
 								   UIViewAutoresizingFlexibleHeight);
 
@@ -170,7 +172,8 @@
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
 	[_thePopup changePage:newPage];
 	[newPage release];
-	[_uiContainer removeFromSuperview];
+	[_thePopup setUserInteractionEnabled:NO];
+	[self performSelector:@selector(closeUI) withObject:nil afterDelay:1.2];
 }
 
 #pragma mark - 
@@ -189,4 +192,10 @@
 	[_bumpAPIObject confirmMatch:NO];
 	[self closeUI];
 }
+
+- (void) dealloc{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[super dealloc];
+}
+
 @end
