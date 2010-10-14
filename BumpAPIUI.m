@@ -114,7 +114,7 @@
 
 - (void)bumpConnectedToBumpNetwork {
 	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump phones to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
+	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
 	[promptPage setSubText:[_bumpAPIObject actionMessage]];
 	[_thePopup changePage:promptPage];
 	[promptPage release];
@@ -145,7 +145,19 @@
  */
 -(void)bumpMatchFailedReason:(BumpMatchFailedReason)reason{
 	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	[newPage setPromptText:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
+	NSMutableString *bodyText = [NSMutableString stringWithString:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
+	if (reason == NoMatch_ReasonNoConfirm) {
+		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"Other user canceled the bump.", @"BumpApiLocalizable",
+									 @"Explain that the other user decided to cancel the bump and the information was not transferred.")];
+	} else if (reason == NoMatch_ReasonAlone) {
+		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"You were the only one to bump.", @"BumpApiLocalizable",
+																   @"The other phone did not register a bump. Explain why the user must bump again.")];
+	} else {
+		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"Sometimes two bumps are required.", @"BumpApiLocalizable",
+																   @"There were too many possible candidates for the server to match.")];
+	}
+
+	[newPage setPromptText:bodyText];
 	[newPage stopSpinner];
 	[_thePopup changePage:newPage];
 	[newPage release];
@@ -169,7 +181,7 @@
  */
 -(void)bumpSessionStarted{
 	BumpAPIPromptPage *newPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[newPage setPromptText:NSLocalizedStringFromTable(@"Success!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
+	[newPage setPromptText:NSLocalizedStringFromTable(@"Bump Successful!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
 	[_thePopup changePage:newPage];
 	[newPage release];
 	[_thePopup setUserInteractionEnabled:NO];
