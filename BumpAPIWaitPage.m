@@ -31,9 +31,9 @@
 #import "BumpAPIUI.h"
 
 #define SPINNER_SIZE 48
-#define SPINNER_BELOW_CENTER 0
-#define TEXT_ABOVE_CENTER 10
-#define TEXT_HEIGHT 40
+#define SPINNER_BELOW_CENTER 20 //How far bellow center the top edge of the spinner is.
+#define TEXT_ABOVE_CENTER -15 //How far above center the bottom edge of the text view is.
+#define TEXT_HEIGHT 90
 #define MARGIN 10
 
 @implementation BumpAPIWaitPage
