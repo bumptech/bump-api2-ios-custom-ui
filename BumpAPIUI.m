@@ -51,6 +51,13 @@
 
 #pragma mark Utility
 -(void)closeUI {
+	// set up an animation for the popup fade transition
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.2];
+	[animation setType:kCATransitionFade];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+	[[_uiContainer.superview layer] addAnimation:animation forKey:@"fade_pages"];
+
 	[_uiContainer removeFromSuperview];
 	self.thePopup = nil;
 	self.uiContainer = nil;
@@ -180,12 +187,7 @@
  * on the API Delegate.
  */
 -(void)bumpSessionStarted{
-	BumpAPIPromptPage *newPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[newPage setPromptText:NSLocalizedStringFromTable(@"Bump Successful!", @"BumpApiLocalizable", @"Displayed to a user when they have successfully connected to another user")];
-	[_thePopup changePage:newPage];
-	[newPage release];
-	[_thePopup setUserInteractionEnabled:NO];
-	[self performSelector:@selector(closeUI) withObject:nil afterDelay:1.2];
+	[self closeUI];
 }
 
 #pragma mark - 
