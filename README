@@ -6,14 +6,17 @@ All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of Bump Technologies, Inc. nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+
+* Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of Bump Technologies, Inc. nor the names of its contributors
+  may be used to endorse or promote products derived from this software without
+  specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -29,20 +32,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 What is it?
 -----------
 
-This is the source code of an implementation of a custom ui for Bump API v2.x on iOS. This also happens to be the default UI that you get in the Bump API if you don't implement your own. Simply put, creating your own custom UI for the Bump API is completely optional; however, if you do choose to implement your own this code can be used as a template of a fully working UI. You can use this template to simply tweak the default implementation by adjusting the colors, fonts, images, etc. Or you can go as far as coming up with your own Bump API UI to be tightly integrated into your Application's style. We only ask that you follow some general API style guidelines that you can find here: bu.mp/apiuiguidelines
+This is the source code of an implementation of a custom ui for Bump API v2.x on iOS. This also happens to be the default UI that you get in the Bump API if you don't implement your own. Simply put, creating your own custom UI for the Bump API is completely optional; however, if you do choose to implement your own this code can be used as a template of a fully working UI. You can use this template to simply tweak the default implementation by adjusting the colors, fonts, images, etc. Or you can go as far as coming up with your own Bump API UI to be tightly integrated into your Application's style. We only ask that you follow some general API style guidelines that you can find here: [http://bu.mp/bumpAPIinstructions](http://bu.mp/bumpAPIinstructions#customui)
 
 We also encourage the community to fork this repository and share your cool UIs with other Bump API developers.
 
 How do I use it?
 ----------------
 
-If you use git for source control we reccomend adding this project as a submodule to your own. 
-More info on submodules here: http://book.git-scm.com/5_submodules.html
+If you use git for source control we recommend adding this project as a submodule to your own.
+More info on submodules here: [http://book.git-scm.com/5_submodules.html](http://book.git-scm.com/5_submodules.html)
 This way if we make improvements to our template, you can easily merge those fixes into your customized template. Also if you find bugs in our template you can easily give back to the Bump API developer community by submitting patches to your fork and sending us a pull request.
 
-Git isn't required though, you can also simply download a zip of the current release from the download section of the bumptech github page if you prefer.
+Git isn't required though, you can also simply download a zip of the current release from the download section of bumptech's github page if you prefer.
 
-Once you have the template locally, simply add all of the files to your xcode project and then set the custom UI as the ui for the API to use via a call to:
+Once you have the template locally, simply add all of the files to your xcode project and then set the custom UI as the UI for the API to use via a call to:
 
 `
 [[BumpAPI sharedInstance] configUIDelegate:BumpAPIUI];
