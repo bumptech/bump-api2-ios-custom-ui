@@ -45,13 +45,16 @@ This way if we make improvements to our template, you can easily merge those fix
 
 Git isn't required though, you can also simply download a zip of the current release from the download section of bumptech's github page if you prefer.
 
-Once you have the template locally, simply add all of the files to your xcode project and then set the custom UI as the UI for the API to use via a call to:
+Once you have the template locally, simply add all of the files to your xcode project and then set the custom UI as the UI for the API to use like so:
 
 `
-[[BumpAPI sharedInstance] configUIDelegate:BumpAPIUI];
+BumpAPIUI *myUi = [[BumpAPIUI alloc] init];
+[myUi setParentView:self.view];
+[myUi setBumpAPIObject:[BumpAPI sharedInstance]];
+[[BumpAPI sharedInstance] configUIDelegate:myUi];
 `
 
-The default UI also requires that you configure the parentView on the BumpAPI so it knows what view to add itself to. Once you have all of that working you can customize the UI code to suit your needs.
+Once you have all of that working you can customize the UI code to suit your needs.
 
 The `<BumpAPICustomUI>` Protocol
 --------------------------------
