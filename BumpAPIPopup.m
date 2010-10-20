@@ -29,6 +29,7 @@
 
 #import "BumpAPIPopup.h"
 #import <CoreGraphics/CoreGraphics.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define OUTER_MARGIN 10
 #define CONTENT_Y_OFFSET 37

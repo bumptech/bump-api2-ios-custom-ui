@@ -32,6 +32,7 @@
 #import "BumpAPIPromptPage.h"
 #import "BumpAPIConfirmPage.h"
 #import "BumpAPIWaitPage.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define UI_W 260
 #define UI_H 260
