@@ -48,10 +48,10 @@ Git isn't required though, you can also simply download a zip of the current rel
 Once you have the template locally, simply add all of the files to your xcode project and then set the custom UI as the UI for the API to use like so:
 
 `
-BumpAPIUI *myUi = [[BumpAPIUI alloc] init];
-[myUi setParentView:self.view];
-[myUi setBumpAPIObject:[BumpAPI sharedInstance]];
-[[BumpAPI sharedInstance] configUIDelegate:myUi];
+	BumpAPIUI *myUi = [[BumpAPIUI alloc] init];
+	[myUi setParentView:self.view];
+	[myUi setBumpAPIObject:[BumpAPI sharedInstance]];
+	[[BumpAPI sharedInstance] configUIDelegate:myUi];
 `
 
 Once you have all of that working you can customize the UI code to suit your needs.
