@@ -183,6 +183,20 @@
 	[_thePopup changePage:newPage];
 	[newPage release];
 }
+
+/**
+ * Once the intial connection to the bump network has been made, there is a chance the connection
+ * to the Bump Network is severed. In this case the bump network might come back, so it's
+ * best to put the user back in the warming up state. If this happens too often then you can 
+ * provide extra messaging and/or explicitly call endSession on the BumpAPI.
+ */
+-(void)bumpNetworkLost {
+	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
+	[promptPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
+	[_thePopup changePage:promptPage];
+	[promptPage release];
+}
+
 /**
  * After both parties have pressed yes, And bumpSessionStartedWith:(Bumper) is about to be called
  * on the API Delegate.
