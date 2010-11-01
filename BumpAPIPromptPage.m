@@ -41,10 +41,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
 		
-		UIImage *handsImg = [UIImage imageNamed:@"BumpAPIAssets.bundle/ready.png"];
-		
-		_handsView = [[UIImageView alloc] initWithFrame:CGRectZero];
-		[_handsView setImage:handsImg];
+		_handsView = [[BumpHandsView alloc] initWithFrame:CGRectZero];
 		_promptView = [[UILabel alloc] initWithFrame:CGRectZero];
 		_subTextView = [[UILabel alloc] initWithFrame:CGRectZero];
 		
@@ -109,6 +106,14 @@
 -(void) setSubText:(NSString *)text{
 	//[_subTextView setText:text];
 	[_subTextView setText:text];
+}
+
+-(void) animateHands:(BOOL)animate{
+	if(animate){
+		[_handsView startAnimating];
+	} else {
+		[_handsView stopAnimating];		
+	}
 }
 
 #pragma mark -

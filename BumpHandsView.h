@@ -1,5 +1,5 @@
 //
-//  BumpAPIPromptPage.h
+//  BumpHandsView.h
 //  BumpAPI
 //
 //  Copyright (c) 2010, Bump Technologies, Inc.
@@ -28,16 +28,28 @@
 //  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <UIKit/UIKit.h>
-#import "BumpHandsView.h"
 
-@interface BumpAPIPromptPage : UIView {
-	BumpHandsView *_handsView;
-	UILabel *_promptView;
-	UILabel *_subTextView;
+
+@interface BumpHandsView : UIView {
+	UIImageView *leftHand;
+	UIImageView *rightHand;
+	UIImageView *signalImageView;
+	
+	//size of the original resources so we can scale
+	//if the frame is changed
+	CGSize signalImageSize;
+	CGSize handImageSize;
+
+	//Reference frames for animating
+	CGRect defaultLeftHandFrame;
+	CGRect defaultRightHandFrame;
+	
+    int mode;
+
+	BOOL isBumpAnimating;
 }
 
--(void) setPromptText:(NSString *)text;
--(void) setSubText:(NSString *)text;
--(void) animateHands:(BOOL)animate;
+- (void) startAnimating;
+- (void) stopAnimating;
 
 @end

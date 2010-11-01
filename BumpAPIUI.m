@@ -125,6 +125,7 @@
 	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
 	[promptPage setSubText:[_bumpAPIObject actionMessage]];
 	[_thePopup changePage:promptPage];
+	[promptPage animateHands:YES];
 	[promptPage release];
 }
 
