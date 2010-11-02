@@ -99,10 +99,11 @@
 	[_thePopup setDelegate:self];
 	[_uiContainer addSubview:_thePopup];
 	[_parentView addSubview:_uiContainer];
-	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[promptPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
-	[_thePopup changePage:promptPage];
-	[promptPage release];
+	BumpAPIWaitPage *waitPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[waitPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
+	[waitPage startSpinner];
+	[_thePopup changePage:waitPage];
+	[waitPage release];
 	[_thePopup show];	
 	//Add a bump button in the simulator for testing.
 #ifdef __i386__
