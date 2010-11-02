@@ -30,10 +30,6 @@
 #import "BumpAPIConfirmPage.h"
 #import "BumpAPIUI.h"
 
-#define MUG_SIZE 60
-#define MUG_ABOVE_CENTER 30
-#define TEXT_ABOVE_CENTER 10
-#define TEXT_HEIGHT 50
 #define MARGIN 10
 #define YES_W 95
 #define NO_W 65
@@ -51,8 +47,6 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-		_mugView = [[UIImageView alloc] initWithFrame:CGRectZero];
-		[_mugView setImage:[UIImage imageNamed:@"BumpAPIAssets.bundle/ready.png"]];
 		
 		_promptView = [[UILabel alloc] initWithFrame:CGRectZero];
 		[_promptView setBackgroundColor:[UIColor clearColor]];
@@ -72,7 +66,6 @@
 					forState:UIControlStateNormal];
 		[_noButton setTitle:NSLocalizedStringFromTable(@"No", @"BumpApiLocalizable", @"No button for Bump API popup") forState:UIControlStateNormal];
 		
-		[self addSubview:_mugView];
 		[self addSubview:_promptView];
 		[self addSubview:_yesButton];
 		[self addSubview:_noButton];
@@ -88,15 +81,11 @@
 	CGFloat vCenter = viewH / 2.0;
 	CGFloat hCenter = viewW / 2.0;
 	
-	CGRect mugRect = CGRectMake(hCenter - (MUG_SIZE / 2.0),
-								vCenter - MUG_ABOVE_CENTER - MUG_SIZE,
-								MUG_SIZE,
-								MUG_SIZE);
-	
+	CGFloat textHeight = viewH - YES_NO_HEIGHT - (2 * MARGIN);
 	CGRect textRect = CGRectMake(MARGIN,
-								 vCenter - TEXT_ABOVE_CENTER,
+								 MARGIN,
 								 viewW - 2.0 * MARGIN,
-								 TEXT_HEIGHT);
+								 textHeight);
 	
 	CGFloat yesNoExtraW = viewW - 2.0 * MARGIN - (YES_NO_SPACE + YES_W + NO_W);
 	
@@ -114,12 +103,10 @@
 								  YES_NO_HEIGHT);
 	
 	//Use CGRectIntegral to round all of the rects to nice pixel boundaries
-	mugRect = CGRectIntegral(mugRect);
 	textRect = CGRectIntegral(textRect);
 	yesBtnRect = CGRectIntegral(yesBtnRect);
 	noBtnRect = CGRectIntegral(noBtnRect);
 	
-	[_mugView setFrame:mugRect];
 	[_promptView setFrame:textRect];
 	[_yesButton setFrame:yesBtnRect];
 	[_noButton setFrame:noBtnRect];
@@ -129,14 +116,9 @@
 	[_promptView setText:text];
 }
 
-- (void)setMugImage:(UIImage *)mug{
-	[_mugView setImage:mug];
-}
-
 - (void)dealloc {
 	self.yesButton = nil;
 	self.noButton = nil;
-	[_mugView release];
 	[_promptView release];
     [super dealloc];
 }

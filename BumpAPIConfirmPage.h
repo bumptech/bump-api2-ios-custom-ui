@@ -30,7 +30,6 @@
 #import <UIKit/UIKit.h>
 
 @interface BumpAPIConfirmPage : UIView {
-	UIImageView *_mugView;
 	UILabel *_promptView;
 	UIButton *_yesButton;
 	UIButton *_noButton;
@@ -40,6 +39,5 @@
 @property (nonatomic, retain, readonly) UIButton *noButton;
 
 - (void)setPromptText:(NSString *)text;
-- (void)setMugImage:(UIImage *)mug;
 
 @end
