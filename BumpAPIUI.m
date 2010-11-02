@@ -225,7 +225,12 @@
 }
 - (void) noPressed{
 	[_bumpAPIObject confirmMatch:NO];
-	[self closeUI];
+	
+	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
+	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
+	[promptPage setSubText:[_bumpAPIObject actionMessage]];
+	[_thePopup changePage:promptPage];
+	[promptPage release];
 }
 
 - (void) dealloc{
