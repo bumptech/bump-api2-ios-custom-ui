@@ -51,7 +51,13 @@
 @synthesize bumpAPIObject = _bumpAPIObject;
 
 #pragma mark Utility
+- (void) cancelDelayedRequests{
+	//Just incase we're showing a new popup before the showBumpToConnect selector was called with delay
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 -(void)closeUI {
+	[self cancelDelayedRequests];
 	// set up an animation for the popup fade transition
 	CATransition *animation = [CATransition animation];
 	[animation setDuration:0.2];
@@ -64,13 +70,21 @@
 	self.uiContainer = nil;
 }
 
+- (void)showBumpToConnect{
+	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
+	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
+	[promptPage setSubText:[_bumpAPIObject actionMessage]];
+	[_thePopup changePage:promptPage];
+	[promptPage animateHands:YES];
+	[promptPage release];
+}
+
 #pragma mark -
 #pragma mark Default BumpMatchUI delegate
 
 -(void)bumpRequestSessionCalled{
 	//Setup our popup UI
-	//Just incase we're showing a new popup before the closeUI selector was called with delay
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(closeUI) object:nil];
+	[self cancelDelayedRequests];
 	UIViewAutoresizing flexible = (UIViewAutoresizingFlexibleWidth |
 								   UIViewAutoresizingFlexibleHeight);
 
@@ -122,12 +136,7 @@
 }
 
 - (void)bumpConnectedToBumpNetwork {
-	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
-	[promptPage setSubText:[_bumpAPIObject actionMessage]];
-	[_thePopup changePage:promptPage];
-	[promptPage animateHands:YES];
-	[promptPage release];
+	[self showBumpToConnect];
 }
 
 /**
@@ -143,6 +152,7 @@
  * Physical bump occurced. Update ui to tell user that a bump has occured
  */
 -(void)bumpOccurred{
+	[self cancelDelayedRequests];
 	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
 	[newPage setPromptText:NSLocalizedStringFromTable(@"Connecting...", @"BumpApiLocalizable", @"Dialog shown when user has just bumped and information is sending to the other phone.")];
 	[newPage startSpinner];
@@ -155,22 +165,25 @@
  */
 -(void)bumpMatchFailedReason:(BumpMatchFailedReason)reason{
 	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	NSMutableString *bodyText = [NSMutableString stringWithString:NSLocalizedStringFromTable(@"Please bump again", @"BumpApiLocalizable", @"Ask user to try to bump phones again.")];
+	NSString *bodyText = nil;
 	if (reason == NoMatch_ReasonNoConfirm) {
-		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"Other user canceled the bump.", @"BumpApiLocalizable",
-									 @"Explain that the other user decided to cancel the bump and the information was not transferred.")];
+		bodyText = NSLocalizedStringFromTable(@"Other user canceled the bump.", @"BumpApiLocalizable",
+												@"Explain that the other user decided to cancel the bump and the information was not transferred.");
 	} else if (reason == NoMatch_ReasonAlone) {
-		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"You were the only one to bump.", @"BumpApiLocalizable",
-																   @"The other phone did not register a bump. Explain why the user must bump again.")];
+		bodyText = NSLocalizedStringFromTable(@"You were the only one to bump.", @"BumpApiLocalizable",
+																   @"The other phone did not register a bump. Explain why the user must bump again.");
 	} else {
-		[bodyText appendFormat:@"\n%@", NSLocalizedStringFromTable(@"Sometimes two bumps are required.", @"BumpApiLocalizable",
-																   @"There were too many possible candidates for the server to match.")];
+		bodyText = NSLocalizedStringFromTable(@"Sometimes two bumps are required.", @"BumpApiLocalizable",
+																   @"There were too many possible candidates for the server to match.");
 	}
 
 	[newPage setPromptText:bodyText];
 	[newPage stopSpinner];
 	[_thePopup changePage:newPage];
 	[newPage release];
+	
+	//Wait a couple of seconds and go back to bump to connect screen
+	[self performSelector:@selector(showBumpToConnect) withObject:nil afterDelay:2.0];
 }
 
 /**
@@ -193,6 +206,7 @@
  * provide extra messaging and/or explicitly call endSession on the BumpAPI.
  */
 -(void)bumpNetworkLost {
+	[self cancelDelayedRequests];
 	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
 	[promptPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
 	[_thePopup changePage:promptPage];
@@ -236,7 +250,7 @@
 }
 
 - (void) dealloc{
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self cancelDelayedRequests];
 	[super dealloc];
 }
 
