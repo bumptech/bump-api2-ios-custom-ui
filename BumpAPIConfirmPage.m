@@ -56,13 +56,15 @@
 		self.yesButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		self.noButton  = [UIButton buttonWithType:UIButtonTypeCustom];
 		
-		UIImage *buttonImage = [[UIImage imageNamed:@"BumpAPIAssets.bundle/button.png"]
+		UIImage *yesButtonImage = [[UIImage imageNamed:@"BumpAPIAssets.bundle/button.png"]
 					    stretchableImageWithLeftCapWidth:7 topCapHeight:7];
-		[_yesButton setBackgroundImage:buttonImage
+		UIImage *noButtonImage = [[UIImage imageNamed:@"BumpAPIAssets.bundle/grey_button.png"]
+					    stretchableImageWithLeftCapWidth:7 topCapHeight:7];
+		[_yesButton setBackgroundImage:yesButtonImage
 					forState:UIControlStateNormal];
 		[_yesButton setTitle:NSLocalizedStringFromTable(@"Yes", @"BumpApiLocalizable", @"Yes button for Bump API popup") forState:UIControlStateNormal];
 		
-		[_noButton setBackgroundImage:buttonImage
+		[_noButton setBackgroundImage:noButtonImage
 					forState:UIControlStateNormal];
 		[_noButton setTitle:NSLocalizedStringFromTable(@"No", @"BumpApiLocalizable", @"No button for Bump API popup") forState:UIControlStateNormal];
 		
