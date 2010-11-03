@@ -79,6 +79,22 @@
 	[promptPage release];
 }
 
+- (void)showWarmingUp{
+	BumpAPIWaitPage *waitPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[waitPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
+	[waitPage startSpinner];
+	[_thePopup changePage:waitPage];
+	[waitPage release];
+}
+
+- (void)showNetworkUnavailable{
+	BumpAPIWaitPage *waitPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
+	[waitPage setPromptText:NSLocalizedStringFromTable(@"Network unavailable", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
+	[waitPage stopSpinner];
+	[_thePopup changePage:waitPage];
+	[waitPage release];
+}
+
 #pragma mark -
 #pragma mark Default BumpMatchUI delegate
 
@@ -113,12 +129,8 @@
 	[_thePopup setDelegate:self];
 	[_uiContainer addSubview:_thePopup];
 	[_parentView addSubview:_uiContainer];
-	BumpAPIWaitPage *waitPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	[waitPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
-	[waitPage startSpinner];
-	[_thePopup changePage:waitPage];
-	[waitPage release];
-	[_thePopup show];	
+	[self showWarmingUp];
+	[_thePopup show];
 	//Add a bump button in the simulator for testing.
 #ifdef __i386__
 	UIButton *bumpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -207,10 +219,12 @@
  */
 -(void)bumpNetworkLost {
 	[self cancelDelayedRequests];
-	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
-	[promptPage setPromptText:NSLocalizedStringFromTable(@"Warming up", @"BumpApiLocalizable", @"Notifying the user the phone is establishing a connection.")];
-	[_thePopup changePage:promptPage];
-	[promptPage release];
+	
+	//Don't tell the user the network is lost immediately. This might just be a hiccup.
+	[self showWarmingUp];
+	
+	//If five seconds pass before we get into a better state show "Network Unavailable"
+	[self performSelector:@selector(showNetworkUnavailable) withObject:nil afterDelay:5.0];
 }
 
 /**
