@@ -35,6 +35,7 @@
 #define NO_W 65
 #define YES_NO_SPACE 26
 #define YES_NO_HEIGHT 45
+#define SPINNER_SIZE 48
 
 @interface BumpAPIConfirmPage ()
 @property (nonatomic, retain) UIButton *yesButton;
@@ -68,9 +69,15 @@
 					forState:UIControlStateNormal];
 		[_noButton setTitle:NSLocalizedStringFromTable(@"No", @"BumpApiLocalizable", @"No button for Bump API popup") forState:UIControlStateNormal];
 		
+		_spinnerView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectZero];
+		[_spinnerView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+		[_spinnerView setHidesWhenStopped:YES];
+		[_spinnerView stopAnimating];
+		
 		[self addSubview:_promptView];
 		[self addSubview:_yesButton];
 		[self addSubview:_noButton];
+		[self addSubview:_spinnerView];
     }
     return self;
 }
@@ -103,25 +110,39 @@
 								  yesY, 
 								  NO_W,
 								  YES_NO_HEIGHT);
+
+	CGRect spinnerRect = CGRectMake(hCenter - (SPINNER_SIZE / 2),
+									viewH - MARGIN - SPINNER_SIZE,
+									SPINNER_SIZE,
+									SPINNER_SIZE);
 	
 	//Use CGRectIntegral to round all of the rects to nice pixel boundaries
 	textRect = CGRectIntegral(textRect);
 	yesBtnRect = CGRectIntegral(yesBtnRect);
 	noBtnRect = CGRectIntegral(noBtnRect);
+	spinnerRect = CGRectIntegral(spinnerRect);
 	
 	[_promptView setFrame:textRect];
 	[_yesButton setFrame:yesBtnRect];
 	[_noButton setFrame:noBtnRect];
+	[_spinnerView setFrame:spinnerRect];
 }
 
 - (void)setPromptText:(NSString *)text{
 	[_promptView setText:text];
 }
 
+- (void)showSpinner{
+	[_yesButton setHidden:YES];
+	[_noButton setHidden:YES];
+	[_spinnerView startAnimating];
+}
+
 - (void)dealloc {
 	self.yesButton = nil;
 	self.noButton = nil;
 	[_promptView release];
+	[_spinnerView release];
     [super dealloc];
 }
 @end

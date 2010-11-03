@@ -33,11 +33,13 @@
 	UILabel *_promptView;
 	UIButton *_yesButton;
 	UIButton *_noButton;
+	UIActivityIndicatorView *_spinnerView;
 }
 
 @property (nonatomic, retain, readonly) UIButton *yesButton;
 @property (nonatomic, retain, readonly) UIButton *noButton;
 
 - (void)setPromptText:(NSString *)text;
+- (void)showSpinner;
 
 @end

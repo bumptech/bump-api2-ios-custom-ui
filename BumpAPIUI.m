@@ -140,6 +140,7 @@
 	[_uiContainer addSubview:bumpButton];
 #endif
 	//show the UI for bumping
+	_connectWithString = @"";
 }
 
 - (void)bumpFailedToConnectToBumpNetwork {
@@ -204,9 +205,11 @@
  */
 -(void)bumpMatched:(Bumper*)bumper{
 	BumpAPIConfirmPage *newPage = [[BumpAPIConfirmPage alloc] initWithFrame:CGRectZero];
-	[newPage setPromptText:[NSString stringWithFormat:NSLocalizedStringFromTable(@"Connect with %@?", @"BumpApiLocalizable", @"Request to connect with another user. For example, this might say Connect with Andy?."), bumper.userName]];
-	 [newPage.yesButton addTarget:self action:@selector(yesPressed) forControlEvents:UIControlEventTouchUpInside];
-	 [newPage.noButton addTarget:self action:@selector(noPressed) forControlEvents:UIControlEventTouchUpInside];
+	_connectWithString = [NSString stringWithFormat:NSLocalizedStringFromTable(@"Connect with %@?", @"BumpApiLocalizable", @"Request to connect with another user. For example, this might say Connect with Andy?."), bumper.userName];
+	[_connectWithString retain];
+	[newPage setPromptText:_connectWithString];
+	[newPage.yesButton addTarget:self action:@selector(yesPressed) forControlEvents:UIControlEventTouchUpInside];
+	[newPage.noButton addTarget:self action:@selector(noPressed) forControlEvents:UIControlEventTouchUpInside];
 	[_thePopup changePage:newPage];
 	[newPage release];
 }
@@ -246,16 +249,15 @@
 #pragma mark Confirm page buttons
 - (void)yesPressed{
 	[_bumpAPIObject confirmMatch:YES];
-	
-	BumpAPIWaitPage *newPage = [[BumpAPIWaitPage alloc] initWithFrame:CGRectZero];
-	[newPage setPromptText:NSLocalizedStringFromTable(@"Please wait", @"BumpApiLocalizable", @"This message asks the user to please wait while the Bump service is doing something.")];
-	[newPage startSpinner];
+	BumpAPIConfirmPage *newPage = [[BumpAPIConfirmPage alloc] initWithFrame:CGRectZero];
+	[newPage setPromptText:_connectWithString];
+	[newPage showSpinner];
 	[_thePopup changePage:newPage];
 	[newPage release];
 }
+
 - (void) noPressed{
 	[_bumpAPIObject confirmMatch:NO];
-	
 	BumpAPIPromptPage *promptPage = [[BumpAPIPromptPage alloc] initWithFrame:CGRectZero];
 	[promptPage setPromptText:NSLocalizedStringFromTable(@"Bump to connect", @"BumpApiLocalizable", @"Explains to users that the phone is ready and they should bump to connect with another phone.")];
 	[promptPage setSubText:[_bumpAPIObject actionMessage]];
@@ -264,6 +266,9 @@
 }
 
 - (void) dealloc{
+	[_connectWithString release];
+	self.uiContainer = nil;
+	self.thePopup = nil;
 	[self cancelDelayedRequests];
 	[super dealloc];
 }

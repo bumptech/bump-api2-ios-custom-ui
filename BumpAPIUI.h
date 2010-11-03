@@ -41,6 +41,10 @@
 	UIView *_uiContainer;
 	BumpAPIPopup *_thePopup;
 	BumpAPI *_bumpAPIObject;
+	
+	//The string displayed to prompt the user to connect with another user
+	//Save in an instance variable so we can use it in transitional states
+	NSString *_connectWithString;
 }
 @property (nonatomic, assign) UIView *parentView;
 @property (nonatomic, assign) id bumpAPIObject;
