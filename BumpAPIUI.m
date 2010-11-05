@@ -183,11 +183,14 @@
 		bodyText = NSLocalizedStringFromTable(@"Other user canceled the bump.", @"BumpApiLocalizable",
 												@"Explain that the other user decided to cancel the bump and the information was not transferred.");
 	} else if (reason == NoMatch_ReasonAlone) {
-		bodyText = NSLocalizedStringFromTable(@"You were the only one to bump.", @"BumpApiLocalizable",
+		bodyText = NSLocalizedStringFromTable(@"No match - please try again.", @"BumpApiLocalizable",
 																   @"The other phone did not register a bump. Explain why the user must bump again.");
 	} else {
-		bodyText = NSLocalizedStringFromTable(@"Sometimes two bumps are required.", @"BumpApiLocalizable",
-																   @"There were too many possible candidates for the server to match.");
+		bodyText = [NSString stringWithFormat:@"%@\n\n%@",
+						NSLocalizedStringFromTable(@"Please bump again.", @"BumpApiLocalizable",
+																   @"Tell the user to please try bumping again."),
+						NSLocalizedStringFromTable(@"Sometimes two bumps are required.", @"BumpApiLocalizable",
+							   @"There were too many possible candidates for the server to match.")];
 	}
 
 	[newPage setPromptText:bodyText];
